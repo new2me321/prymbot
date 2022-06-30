@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+  name="prymbot_description">
+<!-- An fictitious joint between robot and world 0325-->
+  <link name="base_footprint">
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+     <origin xyz="0 0 0.0345" rpy="0 0 0" /> 
+     <parent link="base_footprint"/>
+     <child link="base_link"/>
+   </joint>  
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="3.5508E-05 5.9079E-08 0.0133"
+        rpy="0 0 0" />
+      <mass
+        value="0.4" />
+      <inertia
+        ixx="0.00038538"
+        ixy="-1.1812E-09"
+        ixz="4.9094E-08"
+        iyy="0.001533"
+        iyz="-1.3901E-11"
+        izz="0.0019021" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/base_link.dae" />
+      </geometry>
+      <material
+        name="black">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="front_left_wheel">
+    <inertial>
+      <origin
+        xyz="0.00046378 -0.013212 0.00025812"
+        rpy="0 0 0" />
+      <mass
+        value="0.047994" />
+      <inertia
+        ixx="1.563E-05"
+        ixy="-1.5844E-08"
+        ixz="-1.2492E-09"
+        iyy="2.5045E-05"
+        iyz="-8.8183E-09"
+        izz="1.5589E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/front_left_wheel.dae" />
+      </geometry>
+      <material
+        name="yellow">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/front_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_joint"
+    type="continuous">
+    <origin
+      xyz="0.055119 0.0765 -0.01"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_left_wheel" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      effort="1"
+      velocity="1" />
+  </joint>
+  <link
+    name="rear_left_wheel">
+    <inertial>
+      <origin
+        xyz="0.00046378 -0.013212 0.00025812"
+        rpy="0 0 0" />
+      <mass
+        value="0.047994" />
+      <inertia
+        ixx="1.563E-05"
+        ixy="-1.5844E-08"
+        ixz="-1.2492E-09"
+        iyy="2.5045E-05"
+        iyz="-8.8183E-09"
+        izz="1.5589E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/rear_left_wheel.dae" />
+      </geometry>
+      <material
+        name="yellow">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/rear_left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rear_left_joint"
+    type="continuous">
+    <origin
+      xyz="-0.054881 0.0765 -0.01"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_left_wheel" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      effort="1"
+      velocity="1" />
+  </joint>
+  <link
+    name="rear_right_wheel">
+    <inertial>
+      <origin
+        xyz="-0.00032618 0.013212 -0.00041872"
+        rpy="0 0 0" />
+      <mass
+        value="0.047994" />
+      <inertia
+        ixx="1.5589E-05"
+        ixy="-1.1143E-08"
+        ixz="5.0772E-09"
+        iyy="2.5045E-05"
+        iyz="-1.4305E-08"
+        izz="1.563E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/rear_right_wheel.dae" />
+      </geometry>
+      <material
+        name="yellow">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/rear_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rear_right_joint"
+    type="continuous">
+    <origin
+      xyz="-0.054881 -0.0765 -0.01"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_right_wheel" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      effort="1"
+      velocity="1" />
+  </joint>
+  <link
+    name="front_right_wheel">
+    <inertial>
+      <origin
+        xyz="-0.00041566 0.013212 -0.00033008"
+        rpy="0 0 0" />
+      <mass
+        value="0.047994" />
+      <inertia
+        ixx="1.5594E-05"
+        ixy="-1.42E-08"
+        ixz="1.3714E-08"
+        iyy="2.5045E-05"
+        iyz="-1.1276E-08"
+        izz="1.5625E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/front_right_wheel.dae" />
+      </geometry>
+      <material
+        name="yellow">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prymbot_description/meshes/front_right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_joint"
+    type="continuous">
+    <origin
+      xyz="0.055119 -0.0765 -0.01"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_right_wheel" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      effort="1"
+      velocity="1" />
+  </joint>
+
+</robot>

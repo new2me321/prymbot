@@ -1,0 +1,22 @@
+<launch>
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <param name="/use_sim_time" value="true" />  
+  
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find prymbot_gazebo)worlds/myworld.world"/> -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+  
+  <!-- spawn robot in gazebo-->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find prymbot_description)/urdf/prymbot.urdf.xacro" />
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-param robot_description -urdf -model prymbot -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)" output="screen"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+</launch>

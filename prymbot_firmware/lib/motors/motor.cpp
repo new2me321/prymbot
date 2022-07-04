@@ -1,10 +1,10 @@
 #include <motor.h>
 
 // Define motor pins
-#define right_motor_fwd 2 // right_forward
-#define right_motor_bwd 3 // right_backward
-#define left_motor_fwd 4 // left_forward
-#define left_motor_bwd 5 // left_backward
+#define right_motor_fwd 5 // right_forward
+#define right_motor_bwd 6 // right_backward
+#define left_motor_fwd 7 // left_forward
+#define left_motor_bwd 8 // left_backward
 #define ena_pin 9  // enable PWM for right motor
 #define enb_pin 10 // enable PWM for left motor
 

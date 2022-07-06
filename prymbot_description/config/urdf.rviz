@@ -105,16 +105,20 @@ Visualization Manager:
       Frames:
         All Enabled: false
         base_footprint:
-          Value: true
-        base_link:
           Value: false
+        base_link:
+          Value: true
         front_left_wheel:
           Value: false
         front_right_wheel:
           Value: false
+        odom:
+          Value: false
         rear_left_wheel:
           Value: false
         rear_right_wheel:
+          Value: false
+        world:
           Value: false
       Marker Alpha: 1
       Marker Scale: 1
@@ -123,23 +127,25 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_footprint:
-          base_link:
-            front_left_wheel:
-              {}
-            front_right_wheel:
-              {}
-            rear_left_wheel:
-              {}
-            rear_right_wheel:
-              {}
+        world:
+          odom:
+            base_footprint:
+              base_link:
+                front_left_wheel:
+                  {}
+                front_right_wheel:
+                  {}
+                rear_left_wheel:
+                  {}
+                rear_right_wheel:
+                  {}
       Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -163,7 +169,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.7480710744857788
+      Distance: 1.3271241188049316
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -171,17 +177,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.06220773607492447
-        Y: -0.19932474195957184
-        Z: -0.030041735619306564
+        X: -0.07210373133420944
+        Y: -0.19781211018562317
+        Z: -0.03157613053917885
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.0853985995054245
+      Pitch: 1.235397458076477
       Target Frame: <Fixed Frame>
-      Yaw: 1.4322329759597778
+      Yaw: 3.1672539710998535
     Saved: ~
 Window Geometry:
   Displays:
@@ -200,4 +206,4 @@ Window Geometry:
     collapsed: false
   Width: 1267
   X: 534
-  Y: 65
+  Y: 27

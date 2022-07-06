@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+<arg name="baud" default="57600"/>
+    <!-- Start ROS communication between the robot's computer and arduino base -->
+    <node pkg="rosserial_python" name="rosserial_prymbot" type="serial_node.py" output="screen">
+        <param name="port" value="/dev/ttyUSB0" />
+        <param name="baud" value="$(arg baud)"/>
+    </node>
+
+    <!-- Start Odom publisher CPP -->
+    <node pkg="prymbot_base" type="pub_odom" name="pub_odom" />
+
+        <!-- Publish static transform from base_footprint to base_link -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_odom" args="0 0 0 0 0 0  /world /odom"/>
+</launch>

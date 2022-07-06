@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Launch base -->
+    <include file="$(find prymbot)/launch/bringup.launch" />
+    
+    <!-- Start camera -->
+    <include file="$(find prymbot_camera)/launch/cam.launch" />
+
+    <!-- Start joystick -->
+    <include file="$(find prymbot_control)/launch/joy_teleop.launch" />
+
+    
+</launch>

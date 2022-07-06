@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Launch base -->
+    <include file="$(find prymbot)/launch/bringup.launch" />
+    
+    <!-- Start camera demo visualize over VNC-->
+    <include file="$(find prymbot_camera)/launch/demo.launch" />
+    
+</launch>

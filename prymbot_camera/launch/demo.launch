@@ -1,0 +1,5 @@
+<launch>
+<!-- Start camera Publisher/Subscriber nodes -->
+  <node pkg="prymbot_camera" type="cam_sub.py" name="cam_sub" output="screen"/>
+  <node pkg="prymbot_camera" type="cam_pub.py" name="cam_pub" output="screen"/>
+</launch>

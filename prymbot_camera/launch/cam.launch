@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+<!-- Launch camera publisher node -->
+    <!-- <node pkg="prymbot_camera" type="cam_pub.py" name="cam_pub" output="screen"/> -->
+    <node pkg="prymbot_camera" type="cam_sub_decompressed.py" name="cam_sub" output="screen"/>
+    
+</launch>

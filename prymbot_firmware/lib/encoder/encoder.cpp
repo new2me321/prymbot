@@ -56,8 +56,8 @@ void enc_L_CCW()
 //  function reads RPM on right encoder and return value
 short read_right_RPM(bool motor_direction)
 {
-  unsigned long RPM_1 = 0;
-  unsigned long TimeDif1 = 0;
+  long RPM_1 = 0;
+  long TimeDif1 = 0;
 
   detachInterrupt(digitalPinToInterrupt(ENCODER_1_PIN));
 
@@ -84,8 +84,8 @@ short read_right_RPM(bool motor_direction)
 //  function reads RPM on left encoder and return value
 short read_left_RPM(bool motor_direction)
 {
-  unsigned long RPM_2 = 0;
-  unsigned long TimeDif2 = 0;
+  long RPM_2 = 0;
+  long TimeDif2 = 0;
 
   detachInterrupt(digitalPinToInterrupt(ENCODER_2_PIN));
 

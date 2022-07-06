@@ -64,8 +64,8 @@ long remap(float x, float in_min, float in_max, long out_min, long out_max)
 
 void drive()
 {
-  rightSpeed = 1.0 * linear_x + angular_z * wheel_separation / 2;
-  leftSpeed = 1.0 * linear_x - angular_z * wheel_separation / 2;
+  rightSpeed = linear_x + angular_z * wheel_separation / 2;
+  leftSpeed = linear_x - angular_z * wheel_separation / 2;
 
   if (linear_x > 0 && angular_z == 0)
   {
@@ -148,6 +148,7 @@ void get_velocities()
 
   encoder.left_speed = left_linearVel;
   encoder.right_speed = right_linearVel;
+  encoder.header.stamp = nh.now();
 
   //  publish
   speed_pub.publish(&encoder);

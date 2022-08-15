@@ -2,7 +2,7 @@
  * rosserial Differential Drive node
  * Drives motors on a callback
  *
- * By: Kwasi
+ * Author: Kwasi
  */
 
 #include <Arduino.h>
@@ -14,7 +14,7 @@
 
 // #define TICKS_PER_METER 95 // Number of ticks covered in 1 meter travel
 
-const int LOOP_RATE = 100;           // ROS rate of 10Hz
+const int LOOP_RATE = 100;           // ROS rate of 100Hz
 const double WHEEL_DIAMETER = 0.065; // diameter of wheel in meters
 const int COMMAND_TIMEOUT = 1000;    // 2s interval to reset encoder ticks if robot is not moving
 
@@ -148,6 +148,8 @@ void get_velocities()
 
   encoder.left_speed = left_linearVel;
   encoder.right_speed = right_linearVel;
+  encoder.left_ang_vel = left_angularVel;
+  encoder.right_ang_vel = right_angularVel;
   encoder.header.stamp = nh.now();
 
   //  publish

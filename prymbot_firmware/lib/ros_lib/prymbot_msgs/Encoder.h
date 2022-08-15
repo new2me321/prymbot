@@ -23,13 +23,19 @@ namespace prymbot_msgs
       _left_speed_type left_speed;
       typedef float _right_speed_type;
       _right_speed_type right_speed;
+      typedef float _left_ang_vel_type;
+      _left_ang_vel_type left_ang_vel;
+      typedef float _right_ang_vel_type;
+      _right_ang_vel_type right_ang_vel;
 
     Encoder():
       header(),
       left_ticks(0),
       right_ticks(0),
       left_speed(0),
-      right_speed(0)
+      right_speed(0),
+      left_ang_vel(0),
+      right_ang_vel(0)
     {
     }
 
@@ -55,6 +61,8 @@ namespace prymbot_msgs
       offset += sizeof(this->right_ticks);
       offset += serializeAvrFloat64(outbuffer + offset, this->left_speed);
       offset += serializeAvrFloat64(outbuffer + offset, this->right_speed);
+      offset += serializeAvrFloat64(outbuffer + offset, this->left_ang_vel);
+      offset += serializeAvrFloat64(outbuffer + offset, this->right_ang_vel);
       return offset;
     }
 
@@ -82,11 +90,13 @@ namespace prymbot_msgs
       offset += sizeof(this->right_ticks);
       offset += deserializeAvrFloat64(inbuffer + offset, &(this->left_speed));
       offset += deserializeAvrFloat64(inbuffer + offset, &(this->right_speed));
+      offset += deserializeAvrFloat64(inbuffer + offset, &(this->left_ang_vel));
+      offset += deserializeAvrFloat64(inbuffer + offset, &(this->right_ang_vel));
      return offset;
     }
 
     virtual const char * getType() override { return "prymbot_msgs/Encoder"; };
-    virtual const char * getMD5() override { return "c9fa62c39c971f467f37dc3b34cdc248"; };
+    virtual const char * getMD5() override { return "ac723460252648cf185dce68af006a8f"; };
 
   };
 

@@ -15,8 +15,9 @@
 
 // Robot constants
 int ticks_meter = 95;
-float base_width = 0.135; // m
-
+float base_width = 0.135;  // m
+float base_length = 0.115; // Robot length m
+float wheel_radius = 0.065 / 2;
 // params
 double encoder_low_wrap;
 double encoder_high_wrap;
@@ -32,7 +33,8 @@ int old_enc_left = 0;
 int old_enc_right = 0;
 float d_left;
 float d_right;
-
+float wheel_L_ang_vel;
+float wheel_R_ang_vel;
 float new_x = 0;
 float new_y = 0;
 float new_th = 0;
@@ -46,6 +48,8 @@ ros::Time current_time, last_time;
 void wheelCallback(prymbot_msgs::Encoder msg)
 {
     // # left
+    wheel_L_ang_vel = msg.left_ang_vel;
+
     volatile int enc_left = msg.left_ticks;
 
     if (enc_left < encoder_low_wrap && prev_lencoder > encoder_high_wrap)
@@ -53,7 +57,7 @@ void wheelCallback(prymbot_msgs::Encoder msg)
         lmult = lmult + 1;
     }
 
-    if (enc_left > encoder_high_wrap and prev_lencoder < encoder_low_wrap)
+    if (enc_left > encoder_high_wrap && prev_lencoder < encoder_low_wrap)
     {
         lmult = lmult - 1;
     }
@@ -63,12 +67,14 @@ void wheelCallback(prymbot_msgs::Encoder msg)
     prev_lencoder = enc_left;
 
     // # right
+    wheel_R_ang_vel = msg.right_ang_vel;
+
     volatile int enc_right = msg.right_ticks;
-    if (enc_right < encoder_low_wrap and prev_rencoder > encoder_high_wrap)
+    if (enc_right < encoder_low_wrap && prev_rencoder > encoder_high_wrap)
     {
         rmult = rmult + 1;
     }
-    if (enc_right > encoder_high_wrap and prev_rencoder < encoder_low_wrap)
+    if (enc_right > encoder_high_wrap && prev_rencoder < encoder_low_wrap)
     {
         rmult = rmult - 1;
     }
@@ -108,11 +114,13 @@ void update(ros::Publisher odom_pub, tf::TransformBroadcaster odom_broadcaster)
         float th = (d_right - d_left) / base_width;
         // # calculate velocities
         dx = d / elapsed;
-        dr = th / elapsed;
+
+        dr = (-2 * wheel_L_ang_vel + 2 * wheel_R_ang_vel) * (wheel_radius / (4 * (base_width / 2 + base_length / 2)));
+        // dr = th / elapsed;
 
         if (d != 0)
         {
-            // # calculate distance traveled in x and y
+            // # calculate distance traveled in x && y
             float x = cos(th) * d;
             float y = -sin(th) * d;
             // # calculate the final position of the robot

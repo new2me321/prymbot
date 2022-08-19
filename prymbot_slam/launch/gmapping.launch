@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+<!-- <master auto="start"/> -->
+	<!-- - Gmapping-->
+	<node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
+		<param name="delta" value="0.01" />
+		<param name="xmin" value="-20" />
+		<param name="xmax" value="20" />
+		<param name="ymin" value="-20" />
+		<param name="ymax" value="20" />
+		<param name="base_frame" value="base_link" />
+		<param name="odom_frame" value="/odom" />
+		<param name="linearUpdate" value="0.5" />
+		<param name="angularUpdate" value="0.5" />
+		<param name="temporalUpdate" value="-1.0" />
+		<param name="resampleThreshold" value="0.5" />
+		<param name="particles" value="60" />
+		<!-- <remap from="scan" to="/scan" /> -->
+	</node>
+</launch>

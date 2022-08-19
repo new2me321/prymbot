@@ -11,12 +11,13 @@
 #include <geometry_msgs/Twist.h>
 #include <motor.h>
 #include <encoder.h>
+#include <PID_v1.h>
 
 // #define TICKS_PER_METER 95 // Number of ticks covered in 1 meter travel
 
-const int LOOP_RATE = 100;           // ROS rate of 100Hz
+const int LOOP_RATE = 100;           // ROS rate of 10Hz
 const double WHEEL_DIAMETER = 0.065; // diameter of wheel in meters
-const int COMMAND_TIMEOUT = 1000;    // 2s interval to reset encoder ticks if robot is not moving
+const int COMMAND_TIMEOUT = 1000;    // 1s interval to reset encoder ticks if robot is not moving
 
 // Initial motor params
 // motor speed 0-255
@@ -32,13 +33,27 @@ float wheel_separation = 0.135; // m prev=1.26
 // robot kinematics
 float left_angularVel = 0.0;
 float right_angularVel = 0.0;
-float left_linearVel = 0.0;
-float right_linearVel = 0.0;
+double left_linearVel = 0.0;
+double right_linearVel = 0.0;
 short int right_RPM;
 short int left_RPM;
 
 unsigned long last_command = millis();
 unsigned long last_time = millis();
+
+// PID params
+
+// Define Variables we'll be connecting to
+double rightSpeed_out;
+double leftSpeed_out;
+double left_linearVel_in;
+double right_linearVel_in;
+
+// Specify the links and initial tuning parameters
+double Kp_L = 98, Ki_L = 70, Kd_L = 5; // Kp = 95, Ki = 50, Kd = 0
+double Kp_R = 97, Ki_R = 60, Kd_R = 3; // Kp = 95, Ki = 50, Kd = 0
+PID leftPID(&left_linearVel_in, &leftSpeed_out, &leftSpeed, Kp_L, Ki_L, Kd_L, DIRECT);
+PID rightPID(&right_linearVel_in, &rightSpeed_out, &rightSpeed, Kp_R, Ki_R, Kd_R, DIRECT);
 
 // Instantiate the node handle
 ros::NodeHandle nh;
@@ -48,24 +63,10 @@ prymbot_msgs::Encoder encoder;
 // Publishers
 ros::Publisher speed_pub("/prymbot/wheel", &encoder);
 
-long remap(float x, float in_min, float in_max, long out_min, long out_max)
-{
-  if (abs(x) > 1)
-  {
-    x = 1;
-  }
-  else
-  {
-    x = abs(x);
-  }
-
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 void drive()
 {
-  rightSpeed = linear_x + angular_z * wheel_separation / 2;
-  leftSpeed = linear_x - angular_z * wheel_separation / 2;
+  rightSpeed = fabs(linear_x + angular_z * wheel_separation / 2);
+  leftSpeed = fabs(linear_x - angular_z * wheel_separation / 2);
 
   if (linear_x > 0 && angular_z == 0)
   {
@@ -111,12 +112,17 @@ void drive()
     // nh.loginfo("make backward circular turn ");
   }
 
-  // Adjusts speed of robot wrt sensitivity of controller
-  rightSpeed = remap(rightSpeed, 0, 1, 0, 255);
-  leftSpeed = remap(leftSpeed, 0, 1, 0, 255);
+  if (linear_x == 0 && angular_z == 0)
+  {
+    // stop motors
+    leftSpeed_out = 0;
+    rightSpeed_out = 0;
+    // nh.loginfo("stop");
+  }
 
-  left(motor_left, leftSpeed);
-  right(motor_right, rightSpeed);
+  // send speed to motors
+  left(motor_left, leftSpeed_out);
+  right(motor_right, rightSpeed_out);
 }
 
 void cmd_vel_cb(const geometry_msgs::Twist &cmd_vel)
@@ -145,6 +151,10 @@ void get_velocities()
   // calculate linear velocity in m/s
   left_linearVel = left_angularVel * WHEEL_DIAMETER / 2;
   right_linearVel = right_angularVel * WHEEL_DIAMETER / 2;
+
+  // PID
+  left_linearVel_in = fabs(left_linearVel);
+  right_linearVel_in = fabs(right_linearVel);
 
   encoder.left_speed = left_linearVel;
   encoder.right_speed = right_linearVel;
@@ -177,13 +187,23 @@ void setup()
   // reset encoder ticks
   encoder.left_ticks = 0;
   encoder.right_ticks = 0;
+
+  // Initialize PID settings
+  leftPID.SetOutputLimits(0, 255);
+  rightPID.SetOutputLimits(0, 255);
+
+  leftPID.SetMode(AUTOMATIC);
+  rightPID.SetMode(AUTOMATIC);
 }
 
 void loop()
 {
+
   // If 100ms have passed drive motors and read encoder RPM
   if ((millis() - last_time) >= LOOP_RATE)
   {
+    leftPID.Compute();
+    rightPID.Compute();
     // reset velocities when last command received is greater than timeout
     if ((millis() - last_command) >= COMMAND_TIMEOUT)
     {
@@ -193,6 +213,12 @@ void loop()
       // reset encoder ticks
       encoder.left_ticks = 0;
       encoder.right_ticks = 0;
+
+      // clear PID
+      left_linearVel_in = 0;
+      right_linearVel_in = 0;
+      rightSpeed_out = 0;
+      leftSpeed_out = 0;
     }
 
     // Drive robot
@@ -204,6 +230,15 @@ void loop()
     last_time = millis(); // reset timer
   }
 
-  // cmd_vel_logger();
   nh.spinOnce();
 }
+
+// char rs[8];
+// char ls[8];
+// char log_speed[32];
+
+// dtostrf(rightSpeed_out, 6, 2, rs);
+// dtostrf(leftSpeed_out, 6, 2, ls);
+
+// sprintf(log_speed, "Left_speed =%s Right_speed =%s ", ls, rs);
+// nh.loginfo(log_speed);

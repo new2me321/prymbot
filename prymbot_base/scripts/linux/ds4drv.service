@@ -1,0 +1,11 @@
+[Unit]
+Description=Daemon to pair PS4 bluetooth controller
+Requires=bluetooth.service
+After=bluetooth.service
+
+[Service]
+ExecStart=/usr/local/bin/ds4drv --led=4dff00
+Restart=on-abort
+
+[Install]
+WantedBy=bluetooth.target

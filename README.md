@@ -13,6 +13,6 @@ The following major components are installed on the robot:
 
 The raspberry pi runs on the ubuntu 
 
-[Here](https://docs.google.com/document/d/1fH6ElHOvhxXa-iqAJtU8AjbsKXgf0QWju8EXaXixHSU/edit?usp=sharing) is a link to some sort of journal I wrote during the robot's development. 
+[Here](https://docs.google.com/document/d/1fH6ElHOvhxXa-iqAJtU8AjbsKXgf0QWju8EXaXixHSU/edit?usp=sharing) is a link to some sort of journal I kept during the robot's development and my sanity. 
 
 In future, I will update the system to support ROS 2. 

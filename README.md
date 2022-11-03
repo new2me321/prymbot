@@ -7,5 +7,8 @@ The following major components are installed on the robot:
 2. Arduino Nano V3
 3. 2D lidar ([from Aliexpress](https://www.aliexpress.com/item/4001253880158.html?spm=a2g0o.order_list.0.0.573f1802iVwUdw))
 4. Raspberry Pi Cam rev 1.3 ([from Aliexpress](https://www.aliexpress.com/item/32986293504.html?spm=a2g0o.order_list.0.0.573f1802iVwUdw))
+5. IMU GY-85 ([from Aliexpress](https://www.aliexpress.com/item/2024503421.html?spm=a2g0o.order_list.0.0.573f1802iVwUdw))
+
+
 
 In future, I will update the system to support ROS 2. 

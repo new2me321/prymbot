@@ -1,6 +1,7 @@
 # prymbot
 
-![prymbot](./images/robot.png)
+
+ <p align="center"> <img src="./images/robot_2.jpg" width="425"/>        <img src="./images/robot_1.jpg" width="425"/> </p>
 
 Prymbot is a 4-wheeled non-holonomic robot developed by myself to test my competencies with the Robot Operating System (ROS). 
 

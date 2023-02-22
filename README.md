@@ -1,5 +1,7 @@
 # prymbot
 
+![prymbot](./images/robot.png)
+
 Prymbot is a 4-wheeled non-holonomic robot developed by myself to test my competencies with the Robot Operating System (ROS). 
 
 Prymbot runs on Ubuntu 20.04 OS and uses the ROS Noetic framework. 
